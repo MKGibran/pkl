@@ -17,13 +17,7 @@
               data-bs-target="#tambahDetailPermintaan">
               <i class="mdi mdi-plus mr-2"></i><span>Tambah</span></a>
             <?php elseif ($permintaan[0]['verified_gudang'] == 1 && $permintaan[0]['verified_gm'] == 1 && $permintaan[0]['status_pengembalian'] == 0): ?>
-            <a class="btn btn-primary btn-rounded disabled" href="#" role="button" data-bs-toggle="modal"
-              data-bs-target="#tambahDetailPermintaan">
-              <i class="mdi mdi-plus mr-2"></i><span>Tambah</span></a>
             <?php elseif ($permintaan[0]['verified_gm'] == 1 && $permintaan[0]['status_pengembalian'] == 1): ?>
-            <a class="btn btn-primary btn-rounded disabled" href="#" role="button" data-bs-toggle="modal"
-              data-bs-target="#tambahDetailPermintaan">
-              <i class="mdi mdi-plus mr-2"></i><span>Tambah</span></a>
             <?php endif ?>
             <div class="table-responsive">
               <table class="table">
@@ -33,7 +27,13 @@
                     <th>Tipe</th>
                     <th>Satuan</th>
                     <th>Kuantitas</th>
-                    <th>Aksi</th>
+                    <th>
+                      <?php if ($permintaan[0]['verified_gudang'] && $permintaan[0]['verified_gm'] && $permintaan[0]['status_pengembalian'] == 1):?>
+                        Jumlah Kerusakan Barang
+                        <?php else: ?>
+                        Aksi
+                    <?php endif; ?>
+                  </th>
                     <!-- <th>Status</th>
                     <th>Kondisi Pengembalian</th> -->
                   </tr>
@@ -46,10 +46,14 @@
                       <td><?= $brg['satuan']; ?></td>
                       <td><?= $brg['kuantitas']; ?></td>
                       <td>
+                        <?php if ($permintaan[0]['verified_gudang'] == 0): ?>
                         <a type="button" class="btn btn-rounded mx-1 btn-warning" href="<?= base_url('Staff/BarangController/ubahDetailBarang')?>/<?= $brg['id']; ?>">
                         <i class="mdi mdi-pencil"></i></a>
                         <a type="button" class="btn btn-rounded mx-1 btn-danger" href="<?= base_url('Staff/BarangController/hapusDetailBarang')?>/<?= $brg['id']; ?>">
                         <i class="bi bi-trash"></i></a>
+                        <?php elseif ($permintaan[0]['verified_gudang'] && $permintaan[0]['verified_gm'] && $permintaan[0]['status_pengembalian'] == 1):?>
+                          <p><?= $brg['jumlah_kerusakan']; ?></p>
+                        <?php endif; ?>
                       </td>
                     </tr>
                     <?php endforeach; ?>
@@ -64,7 +68,7 @@
 
                   <!-- Modal Header -->
                   <div class="modal-header">
-                    <h4 class="modal-title">Tambah Form Permintaan Barang</h4>
+                    <h4 class="modal-title">Tambah Permintaan Barang</h4>
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i
                         class="bi bi-x-lg"></i></button>
                   </div>
@@ -148,9 +152,10 @@
             <div class="form-floating">
               <textarea class="form-control bg-transparent" disabled placeholder="<?= $permintaan[0]['note']; ?>" id="floatingTextarea2" style="height: 100px"></textarea>
             </div>
+            <a type="button" class="btn btn-light mt-2" href="<?= base_url('/staff/BarangController/permintaanBarang'); ?>">Kembali</a>
           </div>
         </div>
-      <?php endif ?>
+      <?php endif; ?>
     </div>
   </div>
 </div>

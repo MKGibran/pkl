@@ -16,19 +16,20 @@
               data-bs-target="#tambahDetailPermintaan">
               <i class="mdi mdi-plus mr-2"></i><span>Tambah</span></a>
             <div style="height: 400px ; overflow-y: auto">
-            <?php foreach($barang as $brg): ?>
+              <?php foreach($barang as $brg): ?>
               <div class="form-group mb-1">
                 <div class="form-floating" style="overflow-y: auto;">
-                <div class="list-inline mb-0 mt-2">
-                <p class="text-secondary ml-1 list-inline-item"><?= $brg['created_at']; ?></p>
-                <a type="button" class="mx-1 text-dark float-right list-list-inline-item" href="<?= base_url('Gudang/BarangController/deleteNote')?>/<?= $brg['id']; ?>">
-                        <i class="bi bi-trash"></i></a>
-                </div>
+                  <div class="list-inline mb-0 mt-2">
+                    <p class="text-secondary ml-1 list-inline-item"><?= $brg['created_at']; ?></p>
+                    <a type="button" class="mx-1 text-dark float-right list-list-inline-item"
+                      href="<?= base_url('Gudang/BarangController/deleteNote')?>/<?= $brg['id']; ?>">
+                      <i class="bi bi-trash"></i></a>
+                  </div>
                   <textarea class="form-control mt-0 bg-transparent" disabled name="note" id="floatingTextarea2"
                     style="height: 70px"><?= $brg['note']; ?></textarea>
                 </div>
               </div>
-            <?php endforeach; ?>
+              <?php endforeach; ?>
             </div>
             <a type="button mt-3" class="btn btn-light" href="<?= base_url('Staff/BarangController/') ?>">Kembali</a>
             </form>
@@ -53,10 +54,13 @@
                     <div class="form-group">
                       <input type="hidden" name="id_barang" value="<?= $barang2['id']; ?>">
                       <input type="hidden" name="nama_barang" value="<?= $barang2['nama_barang']; ?>">
-                      <label for="exampleInputNamaBarang"><?= $barang2['nama_barang']; ?> | <?= $barang2['tipe']; ?></label>
-                      <textarea class="form-control mt-1 bg-transparent" placeholder="Tambahkan catatan barang disini..." name="note" id="floatingTextarea2" style="height: 100px"></textarea>
+                      <label for="exampleInputNamaBarang"><?= $barang2['nama_barang']; ?> |
+                        <?= $barang2['tipe']; ?></label>
+                      <textarea class="form-control mt-1 bg-transparent"
+                        placeholder="Tambahkan catatan barang disini..." name="note" id="floatingTextarea2"
+                        style="height: 100px"></textarea>
                     </div>
-                    
+
                     <button type="submit" class="btn btn-primary mr-2">Kirim</button>
                     <button class="btn btn-light" data-bs-dismiss="modal">Batal</button>
                   </form>

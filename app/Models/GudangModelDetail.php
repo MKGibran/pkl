@@ -11,7 +11,8 @@ class GudangModelDetail extends Model
         'satuan',
         'tipe',
         'kuantitas',
-        'id_permintaan'
+        'id_permintaan',
+        'jumlah_kerusakan'
     ];
     protected $useTimestamps      = true;
 
@@ -28,6 +29,21 @@ class GudangModelDetail extends Model
     public function ubahDataBarang($data)
     {
         return $this->db->table('detailPermintaan')->update($data);
+    }
+
+    public function getJoinData($id)
+    {
+        $query =  $this->db->table('permintaanbarang')
+         ->select('detailpermintaan.id, nama_barang, tipe, satuan, kuantitas, id_permintaan, proyek, jumlah_kerusakan')
+         ->join('detailpermintaan', 'permintaanbarang.id = detailpermintaan.id_permintaan', 'left')
+         ->where('detailpermintaan.id_permintaan', $id)
+         ->get();
+        return $query;
+    }
+
+    public function updatePengembalian($data)
+    {
+        $this->db->table('detailpermintaan')->update($data);
     }
 }
 ?>

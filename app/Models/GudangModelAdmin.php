@@ -28,5 +28,15 @@ class GudangModelAdmin extends Model
     {
         return $this->db->table('barang')->replace($data);
     }
+
+    public function getJoinData($id)
+    {
+        $query =  $this->db->table('barang')
+         ->select('*')
+         ->join('note', 'barang.id = note.id_barang', 'left')
+         ->where('note.id_barang', $id)
+         ->get();
+        return $query;
+    }
 }
 ?>

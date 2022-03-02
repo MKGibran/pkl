@@ -155,19 +155,33 @@ class BarangController extends BaseController
 
     public function pengembalian($id)
     {
-        $id = $this->GudangModel->where('id', $id)->find();
+        $query = $this->GudangModelDetail->getJoinData($id)->getResult('array');
         $data = [
-            'id' => $id[0]['id'],
-            'proyek' => $id[0]['proyek'],
-            'lokasi' => $id[0]['lokasi'],
-            'tanggal_pengajuan' => $id[0]['tanggal_pengajuan'],
-            'tanggal_pengembalian' => $id[0]['tanggal_pengembalian'],
-            'verified_gudang' => $id[0]['verified_gudang'],
-            'verified_gm' => $id[0]['verified_gm'],
-            'note' => $id[0]['note'],
-            'status_pengembalian' => 1,
+            'title' => "Sinergy | Pengembalian",
+            'results' => $query,
         ];
-        $this->GudangModel->replace($data);
+        return view('staff/gudang/v_pengembalian', $data);
+    }
+
+    public function updatePengembalian()
+    {
+        if ($this->request->getPost('jumlah') == NULL) {
+            $jumlah_kerusakan = 0;
+        } else {
+            $jumlah_kerusakan = $this->request->getPost('jumlah');
+        }
+        $data = $this->GudangModelDetail->where('id', $this->request->getPost('id'))->find();
+        // $note = $this->GudangModel->getPermintaan($id);
+        $data = [
+            'id' => $this->request->getPost('id'),
+            'id_permintaan' => $this->request->getPost('id_permintaan'),
+            'nama_barang' => $this->request->getPost('nama_barang'),
+            'tipe' => $this->request->getPost('tipe'),
+            'satuan' => $this->request->getPost('satuan'),
+            'kuantitas' => $this->request->getPost('kuantitas'),
+            'jumlah_kerusakan' => $jumlah_kerusakan];
+        $this->GudangModelDetail->replace($data);
+
         return redirect()->back();
     }
 
@@ -187,6 +201,7 @@ class BarangController extends BaseController
         $result = $this->GudangModel->where('id', $id)->find();
         $data = [
             'note' => $this->request->getPost('note'),
+            'status_pengembalian' => 1,
             'id' => $result[0]['id'],
             'proyek' => $result[0]['proyek'],
             'lokasi' => $result[0]['lokasi'],
@@ -194,24 +209,22 @@ class BarangController extends BaseController
             'tanggal_pengembalian' => $result[0]['tanggal_pengembalian'],
             'verified_gudang' => $result[0]['verified_gudang'],
             'verified_gm' => $result[0]['verified_gm'],
-            'status_pengembalian' => $result[0]['status_pengembalian'],
         ];
-        $this->GudangModel->replace($data);
+        $this->GudangModel->save($data);
         return redirect()->to(base_url('Staff/BarangController/permintaanBarang'));
     }
 
     public function seeNote($id)
     {
-
-        $query = $this->GudangModelNote->where('id', $id);
-        $query = $this->GudangModelNote->orderBy('created_at', 'DESC')->find();
-
+        $query = $this->GudangModelAdmin->getJoinData($id)->getResult('array');
         $data = [
             'title' => 'Sinergy | Catatan Barang',
-            'note' => $query
+            'notes' => $query,
         ];
-        
+
         return view('staff/gudang/V_noteBarang.php', $data);
     }
+
+
 }
 ?>

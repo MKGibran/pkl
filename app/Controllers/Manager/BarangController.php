@@ -25,7 +25,7 @@ class BarangController extends BaseController
         $data = ["title" => 'Sinergy | Gudang',
         "barang" => $barang
         ];
-        return view('gudang/data_gudang', $data);
+        return view('staff/gudang/data_gudang', $data);
     }
 
     public function permintaanBarang()
@@ -70,6 +70,7 @@ class BarangController extends BaseController
             'lokasi' => $this->request->getPost('lokasi'),
             'tanggal_pengajuan' => $this->request->getPost('tanggal_pengajuan'),
             'tanggal_pengembalian' => $this->request->getPost('tanggal_pengembalian'),
+            'verified_gudang' => 1,
         ];
         $this->GudangModel->ubahData($data);
         return redirect()->to(base_url('Manager/BarangController/permintaanBarang'));

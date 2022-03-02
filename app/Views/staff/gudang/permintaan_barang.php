@@ -29,95 +29,104 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php foreach($PermintaanBarang as $Permintaan): ?>
-                  <tr>
-                    <td><?= $Permintaan['proyek']; ?></td>
-                    <td><?= $Permintaan['lokasi']; ?></td>
-                    <td><?= $Permintaan['tanggal_pengajuan']; ?></td>
-                    <td><?= $Permintaan['tanggal_pengembalian']; ?></td>
-                    <td>
-                      <!-- Modal Detail -->
-                      <a type="button" class="btn btn-rounded mx-1 btn-success"
-                        href="<?= base_url('Staff/BarangController/detail')?>/<?= $Permintaan['id']; ?>">
-                        <i class="bi bi-zoom-in"></i></a>
-                      <!-- Modal Note -->
-                      <?php if($Permintaan['status_pengembalian'] == 1 && $Permintaan['note'] != NULL): ?>
-                      <!-- <a type="button" class="btn btn-rounded mx-1 btn-primary disabled"
-                        href="<?= base_url('Staff/BarangController/note')?>/<?= $Permintaan['id']; ?>">
-                        <i class="bi bi-journal-text"></i></a> -->
-                      <?php elseif($Permintaan['status_pengembalian'] == 1 && $Permintaan['note'] == NULL): ?>
-                      <a type="button" class="btn btn-rounded mx-1 btn-primary"
-                        href="<?= base_url('Staff/BarangController/note')?>/<?= $Permintaan['id']; ?>">
-                        <i class="bi bi-journal-text"></i></a>
-                      <?php else: ?>
-                      <?php endif ?>
+                  <?php if($PermintaanBarang != NULL):?>
+                    <?php foreach($PermintaanBarang as $Permintaan): ?>
+                    <tr>
+                      <td><?= $Permintaan['proyek']; ?></td>
+                      <td><?= $Permintaan['lokasi']; ?></td>
+                      <td><?= $Permintaan['tanggal_pengajuan']; ?></td>
+                      <td><?= $Permintaan['tanggal_pengembalian']; ?></td>
+                      <td>
+                        <!-- Modal Detail -->
+                        <a type="button" class="btn btn-rounded mx-1 btn-success"
+                          href="<?= base_url('Staff/BarangController/detail')?>/<?= $Permintaan['id']; ?>">
+                          <i class="bi bi-zoom-in"></i></a>
+                        <!-- Modal Note -->
+                        <?php if($Permintaan['status_pengembalian'] == 1 && $Permintaan['note'] != NULL): ?>
+                        <!-- <a type="button" class="btn btn-rounded mx-1 btn-primary disabled"
+                          href="<?= base_url('Staff/BarangController/note')?>/<?= $Permintaan['id']; ?>">
+                          <i class="bi bi-journal-text"></i></a> -->
+                        <?php elseif($Permintaan['status_pengembalian'] == 1 && $Permintaan['note'] == NULL): ?>
+                        <a type="button" class="btn btn-rounded mx-1 btn-primary"
+                          href="<?= base_url('Staff/BarangController/note')?>/<?= $Permintaan['id']; ?>">
+                          <i class="bi bi-journal-text"></i></a>
+                        <?php else: ?>
+                        <?php endif ?>
 
-                      <!-- Modal Edit Permintaan -->
-                      <?php if($Permintaan['verified_gudang'] == 1 && $Permintaan['verified_gm'] == 1 && $Permintaan['status_pengembalian'] == 1): ?>
-                      <?php elseif($Permintaan['verified_gudang'] == 1 && $Permintaan['verified_gm'] == 1 && $Permintaan['status_pengembalian'] == 0): ?>
-                      <?php else: ?>
-                      <a type="button" class="btn btn-rounded mx-1 btn-warning"
-                        href="<?= base_url('Staff/BarangController/ubah')?>/<?= $Permintaan['id']; ?>">
-                        <i class="mdi mdi-pencil"></i></a>
-                      <?php endif ?>
+                        <!-- Modal Edit Permintaan -->
+                        <?php if($Permintaan['verified_gudang'] == 1 && $Permintaan['verified_gm'] == 1 && $Permintaan['status_pengembalian'] == 1): ?>
+                        <?php elseif($Permintaan['verified_gudang'] == 1 && $Permintaan['verified_gm'] == 1 && $Permintaan['status_pengembalian'] == 0): ?>
+                        <?php else: ?>
+                        <a type="button" class="btn btn-rounded mx-1 btn-warning"
+                          href="<?= base_url('Staff/BarangController/ubah')?>/<?= $Permintaan['id']; ?>">
+                          <i class="mdi mdi-pencil"></i></a>
+                        <?php endif ?>
 
-                      <!-- Modal Hapus Pengajuan -->
-                      <?php if ($Permintaan['verified_gudang'] == 1 && $Permintaan['verified_gm'] == 1 && $Permintaan['status_pengembalian'] == 1): ?>
-                      <?php elseif ($Permintaan['verified_gudang'] == 1 && $Permintaan['verified_gm'] == 1 && $Permintaan['status_pengembalian'] == 0): ?>
-                      <?php else: ?>
-                      <a type="button" class="btn btn-rounded mx-1 btn-danger"
-                        href="<?= base_url('Staff/BarangController/hapus')?>/<?= $Permintaan['id']; ?>">
-                        <i class="bi bi-trash"></i></a>
-                      <?php endif ?>
-                    </td>
+                        <!-- Modal Hapus Pengajuan -->
+                        <?php if ($Permintaan['verified_gudang'] == 1 && $Permintaan['verified_gm'] == 1 && $Permintaan['status_pengembalian'] == 1): ?>
+                        <?php elseif ($Permintaan['verified_gudang'] == 1 && $Permintaan['verified_gm'] == 1 && $Permintaan['status_pengembalian'] == 0): ?>
+                        <?php else: ?>
+                        <a type="button" class="btn btn-rounded mx-1 btn-danger"
+                          href="<?= base_url('Staff/BarangController/hapus')?>/<?= $Permintaan['id']; ?>">
+                          <i class="bi bi-trash"></i></a>
+                        <?php endif ?>
+                      </td>
 
-                    <td>
-                      <?php if ($Permintaan['verified_gudang'] == 0 || $Permintaan['verified_gm'] == 0) :?>
-                      <label class="badge badge-warning">Menunggu</label>
-                      <?php elseif($Permintaan['verified_gudang'] == 1 || $Permintaan['verified_gm'] == 1): ?>
-                      <label class="badge badge-info">Disetujui</label>
-                      <?php endif ?>
-                    </td>
-                    
-                    <td>
-                      <?php if ($Permintaan['verified_gm'] == 1 && $Permintaan['status_pengembalian'] == 0): ?>
-                      <a type="button" class="btn btn-rounded mx-1 btn-outline-success"
-                        href="<?= base_url('Staff/BarangController/pengembalian')?>/<?= $Permintaan['id']; ?>">
-                        <i class="mdi mdi-backup-restore mr-2"></i>Kembalikan</a>
-                    </td>
+                      <td>
+                        <?php if ($Permintaan['verified_gudang'] == 0 || $Permintaan['verified_gm'] == 0) :?>
+                        <label class="badge badge-warning">Menunggu</label>
+                        <?php elseif($Permintaan['verified_gudang'] == 1 || $Permintaan['verified_gm'] == 1): ?>
+                        <label class="badge badge-info">Disetujui</label>
+                        <?php endif ?>
+                      </td>
+                      
+                      <td>
+                        <?php if ($Permintaan['verified_gm'] == 1 && $Permintaan['status_pengembalian'] == 0): ?>
+                        <a type="button" class="btn btn-rounded mx-1 btn-outline-success"
+                          href="<?= base_url('Staff/BarangController/pengembalian')?>/<?= $Permintaan['id']; ?>">
+                          <i class="mdi mdi-backup-restore mr-2"></i>Kembalikan</a>
+                      </td>
 
-                    <td>
-                      <?php elseif($Permintaan['verified_gm'] == 1 && $Permintaan['status_pengembalian'] == 1): ?>
-                      <a type="button" class="btn btn-rounded mx-1 btn-outline-success disabled">
-                        <i class="mdi mdi-check mr-2"></i>Dikembalikan</a>
-                    </td>
-                    <?php endif ?>
-                  </tr>
-                  <?php endforeach; ?>
+                      <td>
+                        <?php elseif($Permintaan['verified_gm'] == 1 && $Permintaan['status_pengembalian'] == 1): ?>
+                        <a type="button" class="btn btn-rounded mx-1 btn-outline-success disabled">
+                          <i class="mdi mdi-check mr-2"></i>Dikembalikan</a>
+                      </td>
+                      <?php endif ?>
+                    </tr>
+                    <?php endforeach; ?>
+                  <?php elseif($PermintaanBarang == NULL):?>
+                    <tr>
+                      <td colspan="7" class="text-center">Tidak Ada Data Untuk Ditampilkan</td>
+                    </tr>
+                  <?php endif; ?>
                 </tbody>
               </table>
             </div>
-            <div class="row ${1| ,row-cols-2,row-cols-3, auto,justify-content-md-center,|}">
-              <div class="col mt-3">
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                      </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
+            <?php if($PermintaanBarang != NULL):?>
+              <div class="row ${1| ,row-cols-2,row-cols-3, auto,justify-content-md-center,|}">
+                <div class="col mt-3">
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
               </div>
-            </div>
+            <?php elseif($PermintaanBarang == NULL):?>
+            <?php endif; ?>
           </div>
         </div>
       </div>
