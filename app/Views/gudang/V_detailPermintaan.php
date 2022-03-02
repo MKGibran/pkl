@@ -34,15 +34,16 @@
                       <td><?= $brg['kuantitas']; ?></td>
                       <td>
                         <?php if($permintaan[0]['verified_gudang'] == 0): ?>
-                        <a type="button" class="btn btn-rounded mx-1 btn-warning" href="<?= base_url('Gudang/BarangController/ubahDetailBarang')?>/<?= $brg['id']; ?>">
-                        <i class="mdi mdi-pencil"></i></a>
-                        <a type="button" class="btn btn-rounded mx-1 btn-danger" href="<?= base_url('Gudang/BarangController/hapusDetailBarang')?>/<?= $brg['id']; ?>">
-                        <i class="bi bi-trash"></i></a>
+                          <a type="button" class="btn btn-rounded mx-1 btn-warning" href="<?= base_url('Gudang/BarangController/ubahDetailBarang')?>/<?= $brg['id']; ?>">
+                          <i class="mdi mdi-pencil"></i></a>
+                          <a type="button" class="btn btn-rounded mx-1 btn-danger" href="<?= base_url('Gudang/BarangController/hapusDetailBarang')?>/<?= $brg['id']; ?>">
+                          <i class="bi bi-trash"></i></a>
                         <?php elseif($permintaan[0]['verified_gudang'] == 1 && $permintaan[0]['status_pengembalian'] == 0): ?>
-                        <a type="button" class="btn btn-rounded mx-1 btn-warning disabled" href="<?= base_url('Gudang/BarangController/ubahDetailBarang')?>/<?= $brg['id']; ?>">
-                        <i class="mdi mdi-pencil"></i></a>
-                        <a type="button" class="btn btn-rounded mx-1 btn-danger disabled" href="<?= base_url('Gudang/BarangController/hapusDetailBarang')?>/<?= $brg['id']; ?>">
-                        <i class="bi bi-trash"></i></a>
+                          <a type="button" class="btn btn-rounded mx-1 btn-warning disabled" href="<?= base_url('Gudang/BarangController/ubahDetailBarang')?>/<?= $brg['id']; ?>">
+                          <i class="mdi mdi-pencil"></i></a>
+                          <a type="button" class="btn btn-rounded mx-1 btn-danger disabled" href="<?= base_url('Gudang/BarangController/hapusDetailBarang')?>/<?= $brg['id']; ?>">
+                          <i class="bi bi-trash"></i></a>
+                        <?php elseif($permintaan[0]['verified_gudang'] && $permintaan[0]['verified_gm'] && $permintaan[0]['status_pengembalian'] == 1): ?>
                         <?php endif ?>
                       </td>
                     </tr>

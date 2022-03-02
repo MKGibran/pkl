@@ -219,10 +219,8 @@ class BarangController extends BaseController
 
     public function addNote($id)
     {
-        $query = $this->GudangModelNote->getJoinData($id)->getResult('array');
+        $query = $this->GudangModelAdmin->getJoinData($id)->getResult('array');
         $query2 = $this->GudangModelAdmin->getBarang($id);
-        // dd($query2);
-        dd($query);
         $data = [
             'title' => 'Sinergy | Catatan Barang',
             'barang' => $query,
@@ -245,7 +243,6 @@ class BarangController extends BaseController
 
     public function deleteNote($id)
     {
-        dd($id);
         $this->GudangModelNote->delete($id);
         return redirect()->back();
     }

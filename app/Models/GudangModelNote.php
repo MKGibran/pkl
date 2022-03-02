@@ -27,15 +27,5 @@ class GudangModelNote extends Model
     {
         return $this->db->table('note')->replace($data);
     }
-
-    public function getJoinData($id)
-    {
-        $query =  $this->db->table('note')
-         ->select('*')
-         ->join('barang', 'barang.id = note.id_barang', 'right')
-         ->where('note.id_barang', $id)
-         ->get();
-        return $query;
-    }
 }
 ?>

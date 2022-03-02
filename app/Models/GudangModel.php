@@ -12,6 +12,7 @@ class GudangModel extends Model
         'tanggal_pengajuan',
         'tanggal_pengembalian',
         'status_pengembalian',
+        'note'
     ];
     protected $useTimestamps      = true;
 
