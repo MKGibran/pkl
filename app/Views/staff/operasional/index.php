@@ -12,6 +12,9 @@
                 <a class="btn btn-primary btn-rounded" href="#" role="button" data-bs-toggle="modal"
                 data-bs-target="#tambahOperasional">
                 <i class="mdi mdi-plus mr-2"></i><span>Tambah</span></a>
+                <a class="btn btn-success btn-rounded" href="#" role="button" data-bs-toggle="modal"
+                data-bs-target="#reportModal">
+                <i class="mdi mdi-document mr-2"></i><span>Report</span></a>
                 <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -113,6 +116,50 @@
                     </div>
                     <!-- garis -->
                     <hr>
+                    <!-- garis -->
+                    <div class="form-group">
+                    <label for="exampleInputTransport">Transport</label>
+                    <input autocomplete="off" type="number" class="form-control" name="transport" placeholder="Transport">
+                    </div>
+                    <div class="form-group">
+                    <label for="exampleInputTol">Tol</label>
+                    <input autocomplete="off" type="number" class="form-control" name="tol" placeholder="Tol">
+                    </div>
+                    <div class="form-group">
+                    <label for="exampleInputParkir">Parkir</label>
+                    <input autocomplete="off" type="number" class="form-control" name="parkir" placeholder="Parkir">
+                    </div>
+                    <div class="form-group">
+                    <label for="exampleInputMakan">Makan</label>
+                    <input autocomplete="off" type="number" class="form-control" name="makan" placeholder="Makan">
+                    </div>
+                    <div class="form-group">
+                    <label for="exampleInputLainnya">Lainnya</label>
+                    <input autocomplete="off" type="number" class="form-control" name="lainnya" placeholder="Lainnya">
+                    <input autocomplete="off" type="text" class="form-control mt-2" name="keterangan" placeholder="Keterangan">
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Kirim</button>
+                    <button class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="reportModal">
+            <div class="modal-dialog">
+            <div class="modal-content" style="overflow-y: auto;">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                <h4 class="modal-title">Form Report Operasional</h4>
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                <form class="forms-sample" action="<?= base_url('staff/OperasionalController/reportOperasional') ?>" method="post">
+                    <?= csrf_field() ?>
                     <!-- garis -->
                     <div class="form-group">
                     <label for="exampleInputTransport">Transport</label>

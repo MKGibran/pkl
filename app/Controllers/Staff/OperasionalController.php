@@ -4,12 +4,14 @@ namespace App\Controllers\Staff;
 
 use App\Controllers\BaseController;
 use App\Models\OperasionalModel;
+use App\Models\ReportOperasional;
 
 class OperasionalController extends BaseController
 {
     public function __construct()
     {
         $this->OperasionalModel = new OperasionalModel();
+        $this->ReportOperasional = new ReportOperasional();
     }
     public function index()
     {
@@ -85,6 +87,21 @@ class OperasionalController extends BaseController
     {
         $this->OperasionalModel->delete($id);
         return redirect()->to(site_url('staff/OperasionalController'));
+    }
+
+    public function reportOperasional()
+    {
+        $data = [
+            'transport' => $this->request->getVar('transport'),
+            'tol' => $this->request->getVar('tol'),
+            'parkir' => $this->request->getVar('parkir'),
+            'makan' => $this->request->getVar('makan'),
+            'lainnya' => $this->request->getVar('lainnya'),
+            'keterangan' => $this->request->getVar('keterangan'),
+        ];
+        $this->ReportOperasional->insert($data);
+        session()->setFlashdata("success", "Berhasil mengajukan permintaan operasional");
+        return redirect()->back();
     }
 
 }

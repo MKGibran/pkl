@@ -130,24 +130,6 @@
                             src="https://sinergydep.co.id/images/sdp-logo-white.png" alt="logo" /></a>
                 </div>
                 <ul class="navbar-nav navbar-nav-right">
-                    <li class="nav-item dropdown d-lg-flex d-none">
-                        <a class="dropdown-toggle show-dropdown-arrow btn btn-inverse-primary btn-sm"
-                            id="nreportDropdown" href="#" data-toggle="dropdown"><i class="mdi mdi-file-document-box mr-2"></i>
-                            Reports
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
-                            aria-labelledby="nreportDropdown">
-                            <p class="mb-0 font-weight-medium float-left dropdown-header">Reports</p>
-                            <a class="dropdown-item">
-                                <i class="mdi mdi-file-pdf text-primary"></i>
-                                Pdf
-                            </a>
-                            <a class="dropdown-item">
-                                <i class="mdi mdi-file-excel text-primary"></i>
-                                Exel
-                            </a>
-                        </div>
-                    </li>
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
                             <span class="nav-profile-name"><?= session()->get('name') ?></span>
@@ -199,6 +181,7 @@
                                 <li class="nav-item"><a class="nav-link" href="<?= site_url() ?>staff/OperasionalController">Pengajuan Dana Operasional</a></li>
                             <?php elseif (session()->get('role') == 'manager') : ?>
                                 <li class="nav-item"><a class="nav-link" href="<?= site_url('manager/OperasionalController') ?>">Verifikasi Pengajuan Operasional</a></li>
+                                <li class="nav-item"><a class="nav-link" href="<?= site_url('manager/OperasionalController/showReportOperasional') ?>">Report Pengajuan Operasional</a></li>
                             <?php elseif (session()->get('role') == 'finance') : ?>
                                 <li class="nav-item"><a class="nav-link" href="<?= site_url('finance/OperasionalController') ?>">Verifikasi Pengajuan Operasional</a></li>
                             <?php endif ?>

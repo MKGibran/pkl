@@ -46,7 +46,7 @@
                         <!-- <a type="button" class="btn btn-rounded mx-1 btn-primary disabled"
                           href="<?= base_url('Staff/BarangController/note')?>/<?= $Permintaan['id']; ?>">
                           <i class="bi bi-journal-text"></i></a> -->
-                        <?php elseif($Permintaan['status_pengembalian'] == 1 && $Permintaan['note'] == NULL): ?>
+                        <?php elseif($Permintaan['status_pengembalian'] == 0 && $Permintaan['note'] == NULL): ?>
                         <a type="button" class="btn btn-rounded mx-1 btn-primary"
                           href="<?= base_url('Staff/BarangController/note')?>/<?= $Permintaan['id']; ?>">
                           <i class="bi bi-journal-text"></i></a>

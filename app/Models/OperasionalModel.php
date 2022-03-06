@@ -16,4 +16,9 @@ class OperasionalModel extends Model
     {
         return $this->db->table('operasionals')->update($data);
     }
+
+    public function getUser()
+    {
+        
+    }
 }
