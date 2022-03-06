@@ -32,11 +32,14 @@ class BarangController extends BaseController
 
     public function permintaanBarang()
     {
+        $session = session()->get('id');
         $PermintaanBarang = $this->GudangModel->orderBy('created_at','DESC');
+        $PermintaanBarang = $this->GudangModel->Where('id_user', $session);
         $PermintaanBarang = $this->GudangModel->findAll();
         $data = [
             "title" => 'Sinergy | Permintaan Barang',
-            "PermintaanBarang" => $PermintaanBarang
+            "PermintaanBarang" => $PermintaanBarang,
+            "id_user" => $session
         ];
         return view('staff/gudang/permintaan_barang',$data);
         
@@ -45,6 +48,7 @@ class BarangController extends BaseController
     public function tambah()
     {
         $data = [
+            'id_user' => $this->request->getPost('id_user'),
             'proyek' => $this->request->getPost('proyek'),
             'lokasi' => $this->request->getPost('lokasi'),
             'tanggal_pengajuan' => $this->request->getPost('tanggal_pengajuan'),
@@ -57,7 +61,9 @@ class BarangController extends BaseController
 
     public function ubah($id)
     {
+        $session = session()->get('id');
         $data = [
+            "id_user" => $session,
             "title" => 'Sinergy | Ubah Form Permintaan Barang',
             'permintaan' => $this->GudangModel->getPermintaan($id)
         ];
@@ -67,6 +73,7 @@ class BarangController extends BaseController
     public function update($id)
     {
         $data = [
+            'id_user' => $this->request->getPost('id_user'),
             'id' => $this->request->getPost('id'),
             'proyek' => $this->request->getPost('proyek'),
             'lokasi' => $this->request->getPost('lokasi'),
@@ -165,24 +172,34 @@ class BarangController extends BaseController
 
     public function updatePengembalian()
     {
+        $id_permintaan = $this->request->getPost('id_permintaan'); 
+        $barang = $this->request->getPost('nama_barang');
         if ($this->request->getPost('jumlah') == NULL) {
             $jumlah_kerusakan = 0;
         } else {
             $jumlah_kerusakan = $this->request->getPost('jumlah');
         }
-        $data = $this->GudangModelDetail->where('id', $this->request->getPost('id'))->find();
-        // $note = $this->GudangModel->getPermintaan($id);
-        $data = [
-            'id' => $this->request->getPost('id'),
-            'id_permintaan' => $this->request->getPost('id_permintaan'),
-            'nama_barang' => $this->request->getPost('nama_barang'),
-            'tipe' => $this->request->getPost('tipe'),
-            'satuan' => $this->request->getPost('satuan'),
-            'kuantitas' => $this->request->getPost('kuantitas'),
-            'jumlah_kerusakan' => $jumlah_kerusakan];
-        $this->GudangModelDetail->replace($data);
+        
+        if ($jumlah_kerusakan > $this->request->getPost('kuantitas')) {
+            echo "<script>";
+            echo " alert('Jumlah kerusakan barang ". $barang ." tidak sesuai !');      
+                    window.location.href='".site_url('staff/BarangController/pengembalian/')."".$id_permintaan ."';
+                </script>";
+        } else {
+            $data = $this->GudangModelDetail->where('id', $this->request->getPost('id'))->find();
+            // $note = $this->GudangModel->getPermintaan($id);
+            $data = [
+                'id' => $this->request->getPost('id'),
+                'id_permintaan' => $id_permintaan,
+                'nama_barang' => $barang,
+                'tipe' => $this->request->getPost('tipe'),
+                'satuan' => $this->request->getPost('satuan'),
+                'kuantitas' => $this->request->getPost('kuantitas'),
+                'jumlah_kerusakan' => $jumlah_kerusakan];
+            $this->GudangModelDetail->replace($data);
 
-        return redirect()->back();
+            return redirect()->back();
+        }
     }
 
     // Note
@@ -224,7 +241,5 @@ class BarangController extends BaseController
 
         return view('staff/gudang/V_noteBarang.php', $data);
     }
-
-
 }
 ?>

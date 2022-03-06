@@ -53,6 +53,10 @@ class AuthController extends BaseController
 
                     return redirect()->to(base_url('gudang'));
                 }
+                elseif($staff['role'] == "admin"){
+
+                    return redirect()->to(base_url('admin'));
+                }
             }
         }
 

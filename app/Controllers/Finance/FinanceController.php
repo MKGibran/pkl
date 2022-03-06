@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Controllers\Finance;
-
+use App\Models\OperasionalModel;
 use App\Controllers\BaseController;
 
 class FinanceController extends BaseController
 {
     public function __construct()
     {
+        $this->OperasionalModel = new OperasionalModel();
         if (session()->get('role') != 'finance')
         {
             echo 'access denide';
@@ -16,8 +17,10 @@ class FinanceController extends BaseController
     }
     public function index()
     {
+        $pengajuans = $this->OperasionalModel->getUserFinanceDashboard()->getResult('array');
         $data = [
-            'title' => 'Sinergy Dashboard | Finance'
+            'title' => 'Sinergy Dashboard | Finance',
+            'pengajuans' => $pengajuans
         ];
         return view('finance/index', $data);
     }

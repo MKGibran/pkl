@@ -48,28 +48,28 @@
         <div class="col-sm-6 mb-4 mb-xl-0">
           <div class="card" style="max-height: 600px;">
             <div class="card-body" style="overflow-y: auto;">
-              <div class="card-title">Daftar Pengajuan Operasional</div>
+              <div class="card-title">Daftar Permintaan Barang</div>
               <div class="table-responsive mt-3">
                 <table class="table">
-                  <th>No</th>
-                  <th>Nama Pengaju</th>
-                  <th>Proyek</th>
-                  <?php if($pengajuans) :?>
+                    <th>No</th>
+                    <th>Nama Pengaju</th>
+                    <th>Proyek</th>
+				<?php if($permintaans) :?>
                   <tbody>
                     <?php $i=1; ?>
-                    <?php foreach ($pengajuans as $pengajuan) :?>
+					<?php foreach ($permintaans as $permintaan) :?>
                     <tr>
-                      <td class="text-left"><?= $i++; ?></td>
-                      <td class="text-left"><?= $pengajuan['name']; ?></td>
-                      <td class="text-left"><?= $pengajuan['proyek']; ?></td>
+                        <td class="text-left"><?= $i++; ?></td>
+                        <td class="text-left"><?= $permintaan['name']; ?></td>
+                        <td class="text-left"><?= $permintaan['proyek']; ?></td>
                     </tr>
-                    <?php endforeach ?>
+					<?php endforeach ?>
                   </tbody>
-                  <?php elseif(!$pengajuans): ?>
-                  <tbody>
-                    <td colspan="3" class="text-center">Tidak ada data untuk ditampilkan</td>
-                  </tbody>
-                  <?php endif ?>
+				<?php elseif(!$permintaans): ?>
+					<tbody>
+						<td colspan="3" class="text-center">Tidak ada data untuk ditampilkan</td>
+					</tbody>
+				<?php endif ?>
                 </table>
               </div>
             </div>

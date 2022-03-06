@@ -15,6 +15,7 @@
             <form class="forms-sample" action="<?= base_url() ?>/Gudang/BarangController/update/<?= $permintaan['id']; ?>" method="POST">
             <?= csrf_field(); ?>
             <input type="hidden" name="id" required autocomplete="off" value="<?= $permintaan['id']; ?>">
+            <input type="hidden" name="id_user" required autocomplete="off" value="<?= $permintaan['id_user']; ?>">
               <div class="form-group">
                 <label for="exampleInputUsername">Proyek</label>
                 <input name="proyek" type="text" class="form-control" id="exampleInputProyek" required autocomplete="off" value="<?= $permintaan['proyek']; ?>">

@@ -17,6 +17,7 @@
                 <table class="table">
                     <thead>
                     <tr>
+                        <th>Nama Pengaju</th>
                         <th>Proyek</th>
                         <th>Lokasi</th>
                         <th>Tanggal</th>
@@ -28,8 +29,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($operasional as $row) : ?>
+                    <?php foreach ($getUser as $row) : ?>
                     <tr>
+                        <td><?= $row['name'] ?></td>
                         <td><?= $row['proyek'] ?></td>
                         <td><?= $row['lokasi'] ?></td>
                         <td><?= date('d-m-Y', strtotime($row['created_at']))?></td>

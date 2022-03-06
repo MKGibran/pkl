@@ -46,30 +46,24 @@
           </div>
         </div>
         <div class="col-sm-6 mb-4 mb-xl-0">
-          <div class="card" style="max-height: 600px;">
+          <div class="card" style="height: 600px;">
             <div class="card-body" style="overflow-y: auto;">
-              <div class="card-title">Daftar Pengajuan Operasional</div>
+              <div class="card-title">Daftar Pengguna</div>
               <div class="table-responsive mt-3">
                 <table class="table">
-                  <th>No</th>
-                  <th>Nama Pengaju</th>
-                  <th>Proyek</th>
-                  <?php if($pengajuans) :?>
-                  <tbody>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Role</th>
+                  <tbody style="overflow-y: auto;">
                     <?php $i=1; ?>
-                    <?php foreach ($pengajuans as $pengajuan) :?>
+                    <?php foreach ($users as $user) :?>
                     <tr>
-                      <td class="text-left"><?= $i++; ?></td>
-                      <td class="text-left"><?= $pengajuan['name']; ?></td>
-                      <td class="text-left"><?= $pengajuan['proyek']; ?></td>
+                        <td class="text-left"><?= $i++; ?></td>
+                        <td class="text-left"><?= $user['name']; ?></td>
+                        <td class="text-left"><?= $user['role']; ?></td>
                     </tr>
                     <?php endforeach ?>
                   </tbody>
-                  <?php elseif(!$pengajuans): ?>
-                  <tbody>
-                    <td colspan="3" class="text-center">Tidak ada data untuk ditampilkan</td>
-                  </tbody>
-                  <?php endif ?>
                 </table>
               </div>
             </div>

@@ -4,6 +4,8 @@
 
     <?= $this->include('template/navbar') ?>
 
+    <?= d($getUser) ?>
+
     <div class="container-fluid">
         <div class="card mt-3">
             <div class="card">
@@ -19,6 +21,7 @@
                 <table class="table">
                     <thead>
                     <tr>
+                        <th>Nama Pengaju</th>
                         <th>Proyek</th>
                         <th>Lokasi</th>
                         <th>Tanggal</th>
@@ -29,32 +32,39 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($operasional as $row) : ?>
-                    <tr>
-                        <td><?= $row['proyek'] ?></td>
-                        <td><?= $row['lokasi'] ?></td>
-                        <td><?= date('d-m-Y', strtotime($row['created_at'])) ?></td>
-                        <td><?= date('d-m-Y', strtotime($row['w_berangkat'])) ?></td>
-                        <td><?= date('d-m-Y', strtotime($row['w_pulang'])) ?></td>
-                        <td>
-                        <a type="button" class="btn btn-rounded mx-1 btn-success" href="<?= base_url('staff/OperasionalController/show') ?>/<?= $row['id'] ?>"">
-                        <i class="bi bi-zoom-in"></i></a>
-                        <!-- Modal Operasional -->
-                        <a type="button" class="btn btn-rounded mx-1 btn-warning" href="<?= base_url('staff/OperasionalController/edit') ?>/<?= $row['id'] ?>">
-                            <i class="mdi mdi-pencil"></i></a>
-                        <!-- Modal Hapus Pengajuan -->
-                        <a type="button" class="btn btn-rounded mx-1 btn-danger" href="<?= base_url('staff/OperasionalController/delete') ?>/<?= $row['id'] ?>">
-                            <i class="bi bi-trash"></i></a>
-                        </td>
-                        <td>
-                            <?php if ($row['status_gm'] == 0 || $row['status_fm'] == 0): ?>
-                                <label class="badge badge-warning">Menunggu</label>
-                            <?php elseif ($row['status_gm'] == 1 || $row['status_fm'] == 1): ?>
-                                <label class="badge badge-success">Disetujui</label>
-                            <?php endif ?>
-                        </td>
-                    </tr>
-                    <?php endforeach ?>
+                    <?php if ($getUser != NULL): ?>
+                        <?php foreach ($getUser as $row) : ?>
+                        <tr>
+                            <td><?= $getUser[0]['name'] ?></td>
+                            <td><?= $row['proyek'] ?></td>
+                            <td><?= $row['lokasi'] ?></td>
+                            <td><?= date('d-m-Y', strtotime($row['created_at'])) ?></td>
+                            <td><?= date('d-m-Y', strtotime($row['w_berangkat'])) ?></td>
+                            <td><?= date('d-m-Y', strtotime($row['w_pulang'])) ?></td>
+                            <td>
+                            <a type="button" class="btn btn-rounded mx-1 btn-success" href="<?= base_url('staff/OperasionalController/show') ?>/<?= $row['id'] ?>"">
+                            <i class="bi bi-zoom-in"></i></a>
+                            <!-- Modal Operasional -->
+                            <a type="button" class="btn btn-rounded mx-1 btn-warning" href="<?= base_url('staff/OperasionalController/edit') ?>/<?= $row['id'] ?>">
+                                <i class="mdi mdi-pencil"></i></a>
+                            <!-- Modal Hapus Pengajuan -->
+                            <a type="button" class="btn btn-rounded mx-1 btn-danger" href="<?= base_url('staff/OperasionalController/delete') ?>/<?= $row['id'] ?>">
+                                <i class="bi bi-trash"></i></a>
+                            </td>
+                            <td>
+                                <?php if ($row['status_gm'] == 0 || $row['status_fm'] == 0): ?>
+                                    <label class="badge badge-warning">Menunggu</label>
+                                <?php elseif ($row['status_gm'] == 1 || $row['status_fm'] == 1): ?>
+                                    <label class="badge badge-success">Disetujui</label>
+                                <?php endif ?>
+                            </td>
+                        </tr>
+                        <?php endforeach ?>
+                    <?php elseif ($getUser == NULL): ?>
+                        <tr>
+                            <td colspan="8" class="text-center">Tidak ada data untuk ditampilkan</td>
+                        </tr>
+                    <?php endif; ?>
                     </tbody>
                 </table>
                 </div>
@@ -98,6 +108,7 @@
                 <div class="modal-body">
                 <form class="forms-sample" action="<?= base_url('staff/OperasionalController/store') ?>" method="post">
                     <?= csrf_field() ?>
+                    <input type="hidden" name="user_id" value="<?= session()->get('id'); ?>">
                     <div class="form-group">
                     <label for="exampleInputProyek">Proyek</label>
                     <input autocomplete="off" type="text" class="form-control" name="proyek" placeholder="Proyek">

@@ -65,6 +65,7 @@ $routes->group("finance", ["filter" => "auth"], function ($routes) {
     $routes->get("/", "Finance\FinanceController::index");  
     $routes->get('/operasional', 'Finance\FinanceController::index');
     $routes->get('/operasional/verifikasi/(:num)', 'Finance\OperasionalController::verifikasi/$1');
+    $routes->get('/operasional/excel', 'Finance\OperasionalController::exportExcel');
 });
 // Gudang
 $routes->group("gudang", ['filter' => 'auth'], function ($routes) {
@@ -72,6 +73,11 @@ $routes->group("gudang", ['filter' => 'auth'], function ($routes) {
     $routes->get('/gudang', 'Gudang\BarangController::kelolaInventaris');
     $routes->get('/gudang/verifikasi/(:num)', 'Gudang\BarangController::verifikasi/$1');
     $routes->get('/gudang/exportHarian', 'Gudang\BarangController::excelHarianBarang');
+});
+// Admin routes
+$routes->group("admin", ["filter" => "auth"], function ($routes) {
+    $routes->get("/", "Admin\AdminController::index");  
+    $routes->get('/gudang', 'Admin\AdminController::gudang');
 });
 $routes->get('logout', 'AuthController::logout');
 // $routes->get('/', 'Home::index');

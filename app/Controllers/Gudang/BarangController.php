@@ -48,8 +48,7 @@ class BarangController extends BaseController
 
     public function permintaanBarang()
     {
-        $PermintaanBarang = $this->GudangModel->orderBy('created_at','DESC');
-        $PermintaanBarang = $this->GudangModel->findAll();
+        $PermintaanBarang = $this->GudangModel->getJoinData()->getResult(('array'));
         $data = [
             "title" => 'Sinergy | Permintaan Barang',
             "PermintaanBarang" => $PermintaanBarang
@@ -61,6 +60,7 @@ class BarangController extends BaseController
     public function tambah()
     {
         $data = [
+            'id_user' => $this->request->getPost('id_user'),
             'proyek' => $this->request->getPost('proyek'),
             'lokasi' => $this->request->getPost('lokasi'),
             'tanggal_pengajuan' => $this->request->getPost('tanggal_pengajuan'),
@@ -83,6 +83,7 @@ class BarangController extends BaseController
     public function update($id)
     {
         $data = [
+            'id_user' => $this->request->getPost('id_user'),
             'id' => $this->request->getPost('id'),
             'proyek' => $this->request->getPost('proyek'),
             'lokasi' => $this->request->getPost('lokasi'),
@@ -165,7 +166,6 @@ class BarangController extends BaseController
 
     public function hapusDetailBarang($id)
     {
-
         $this->GudangModelDetail->delete($id);
         return redirect()->to(base_url('gudang/BarangController/permintaanBarang'));
     }
@@ -325,7 +325,6 @@ class BarangController extends BaseController
         $url = substr($url, -6);
         $url = substr($url, 0, 4);
         $barang = $this->GudangModelDetail->getJoinDataMonth($url)->getResult('array');
-        dd($barang);
         $spreadsheet = new Spreadsheet();
     // tulis header/nama kolom 
     $spreadsheet->setActiveSheetIndex(0)

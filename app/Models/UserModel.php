@@ -41,4 +41,10 @@ class UserModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getUser($session)
+    {
+        $query = $this->db->table('users')->where('id', $session);
+        return $query;
+    }
 }

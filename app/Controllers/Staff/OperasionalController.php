@@ -16,9 +16,11 @@ class OperasionalController extends BaseController
     public function index()
     {
         $operasional = $this->OperasionalModel->findAll();
+        $session = session()->get('id');
         $data = [
             'title' => 'Sinergy Dashboard | Operasional',
-            'operasional' => $operasional
+            'operasional' => $operasional,
+            'getUser' => $this->OperasionalModel->getUser($session)->getResult('array') 
         ];
         return view('staff/operasional/index', $data);
     }
@@ -37,6 +39,7 @@ class OperasionalController extends BaseController
             'makan' => $this->request->getVar('makan'),
             'lainnya' => $this->request->getVar('lainnya'),
             'keterangan' => $this->request->getVar('keterangan'),
+            'user_id' => $this->request->getVar('user_id'),
         ];
         $this->OperasionalModel->insert($data);
         session()->setFlashdata("success", "Berhasil mengajukan permintaan operasional");

@@ -30,8 +30,7 @@ class BarangController extends BaseController
 
     public function permintaanBarang()
     {
-        $PermintaanBarang = $this->GudangModel->orderBy('created_at','DESC');
-        $PermintaanBarang = $this->GudangModel->findAll();
+        $PermintaanBarang = $this->GudangModel->getJoinData()->getResult(('array'));
         $data = [
             "title" => 'Sinergy | Permintaan Barang',
             "PermintaanBarang" => $PermintaanBarang
@@ -65,6 +64,7 @@ class BarangController extends BaseController
     public function update($id)
     {
         $data = [
+            'id_user' => $this->request->getPost('id_user'),
             'id' => $this->request->getPost('id'),
             'proyek' => $this->request->getPost('proyek'),
             'lokasi' => $this->request->getPost('lokasi'),

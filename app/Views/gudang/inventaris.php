@@ -15,6 +15,7 @@
               <table class="table">
                 <thead>
                   <tr>
+                    <th>Pengaju</th>
                     <th>Proyek</th>
                     <th>Lokasi</th>
                     <th>Tanggal Pengajuan</th>
@@ -28,6 +29,7 @@
                   <?php foreach($PermintaanBarang as $Permintaan): ?>
                     <?php if($Permintaan['verified_gudang'] && $Permintaan['verified_gm'] && $Permintaan['status_pengembalian'] == 1 || $Permintaan['verified_gudang'] == 0 && $Permintaan['status_pengembalian'] == 0 || $Permintaan['verified_gudang'] == 1 && $Permintaan['status_pengembalian'] == 0): ?>
                       <tr>
+                        <td><?= $Permintaan['name']; ?></td>
                         <td><?= $Permintaan['proyek']; ?></td>
                         <td><?= $Permintaan['lokasi']; ?></td>
                         <td><?= $Permintaan['tanggal_pengajuan']; ?></td>

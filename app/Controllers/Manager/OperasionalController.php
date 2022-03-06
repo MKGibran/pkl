@@ -19,6 +19,7 @@ class OperasionalController extends BaseController
         $data = [
             'title' => 'Sinergy Dashboard | Verifikasi Operaisonal',
             'operasional' => $operasional,
+            'getUser' => $this->OperasionalModel->getUserManager()->getResult('array') 
         ];
         return view('manager/operasional/index', $data);
     }

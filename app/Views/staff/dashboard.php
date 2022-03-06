@@ -2,32 +2,110 @@
 
 <?= $this->section('content') ?>
 
-    <?= $this->include('template/navbar') ?>
+<?= $this->include('template/navbar') ?>
 
 <div class="container-fluid page-body-wrapper">
-	<div class="main-panel">
-		<div class="content-wrapper">
-			<div class="row">
-				<div class="col-sm-6 mb-4 mb-xl-0">
-					<div class="d-lg-flex align-items-center">
-						<div>
-							<h3 class="text-dark font-weight-bold mb-2">Hi, welcome back!</h3>
-							<h6 class="font-weight-normal mb-2">Last login was 23 hours ago. View details</h6>
-						</div>
-						<div class="ml-lg-5 d-lg-flex d-none">
-								<button type="button" class="btn bg-white btn-icon">
-									<i class="mdi mdi-view-grid text-success"></i>
-							</button>
-								<button type="button" class="btn bg-white btn-icon ml-2">
-									<i class="mdi mdi-format-list-bulleted font-weight-bold text-primary"></i>
-								</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="main-panel">
+    <div class="content-wrapper">
+      <div class="row">
+        <div class="col-sm-6 mb-4 mb-xl-0">
+          <div class="card">
+            <div class="card-body">
+              <?php date_default_timezone_set("Asia/Jakarta"); ?>
+              <ul class="list-inline d-block  mb-0">
+                <li class="list-inline-item float-left card-text p-1 mx-0 mb-0">Selamat datang <strong
+                    class="text-dark"><?= session()->get('name') ?></strong></li>
+                <li class="list-inline-item float-right card-title p-1 mx-0 mb-0"><?= date("h"); ?> :
+                  <?= date("i"); ?> | <?= date("d M Y"); ?></li>
+              </ul>
+            </div>
+          </div>
+          <div class="card mt-3">
+            <div class="card-body">
+              <img src="<?= base_url() ?>/assets/images/faces/face4.jpg" style="width: 250px;"
+                class="rounded-pill mx-auto d-block img-fluid mb-5" alt="Profile Photo">
+              <div class="table-responsive mt-5">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td class="text-left" style="opacity: 70%;">Nama</td>
+                      <td class="text-right"><?= session()->get('name') ?></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left" style="opacity: 70%;">Email</td>
+                      <td class="text-right"><?= session()->get('email') ?></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left" style="opacity: 70%;">Role</td>
+                      <td class="text-right"><?= session()->get('role') ?></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 mb-4 mb-xl-0">
+          <div class="card" style="max-height: 300px;">
+            <div class="card-body" style="overflow-y: auto;">
+              <div class="card-title">Daftar Permintaan Barang</div>
+              <div class="table-responsive mt-3">
+                <table class="table">
+                  <th>No</th>
+                  <th>Proyek</th>
+                  <th>Lokasi</th>
+                  <?php if($permintaans) :?>
+                  <tbody>
+                    <?php $i=1; ?>
+                    <?php foreach ($permintaans as $permintaan) :?>
+                    <tr>
+                      <td class="text-left"><?= $i++; ?></td>
+                      <td class="text-left"><?= $permintaan['proyek']; ?></td>
+                      <td class="text-left"><?= $permintaan['lokasi']; ?></td>
+                    </tr>
+                    <?php endforeach ?>
+                  </tbody>
+                  <?php elseif(!$permintaans): ?>
+                  <tbody>
+                    <td colspan="3" class="text-center">Tidak ada data untuk ditampilkan</td>
+                  </tbody>
+                  <?php endif ?>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="card mt-3" style="max-height: 300px;">
+            <div class="card-body" style="overflow-y: auto;">
+              <div class="card-title">Daftar Pengajuan Operasional</div>
+              <div class="table-responsive mt-3">
+                <table class="table">
+                  <th>No</th>
+                  <th>Proyek</th>
+                  <th>Lokasi</th>
+                  <?php if($pengajuans) :?>
+                  <tbody>
+                    <?php $i=1; ?>
+                    <?php foreach ($pengajuans as $pengajuan) :?>
+                    <tr>
+                      <td class="text-left"><?= $i++; ?></td>
+                      <td class="text-left"><?= $pengajuan['proyek']; ?></td>
+                      <td class="text-left"><?= $pengajuan['lokasi']; ?></td>
+                    </tr>
+                    <?php endforeach ?>
+                  </tbody>
+                  <?php elseif(!$pengajuans): ?>
+                  <tbody>
+                    <td colspan="3" class="text-center">Tidak ada data untuk ditampilkan</td>
+                  </tbody>
+                  <?php endif ?>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
 
 <?= $this->endSection() ?>
