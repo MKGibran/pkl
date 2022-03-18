@@ -6,6 +6,8 @@ use App\Models\GudangModelAdmin;
 use App\Models\GudangModelDetail;
 use App\Models\GudangModelNote;
 use App\Controllers\BaseController;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class BarangController extends BaseController
 {
@@ -30,10 +32,23 @@ class BarangController extends BaseController
         return view('staff/gudang/data_gudang', $data);
     }
 
+    public function barangRusak()
+    {
+        $barang = $this->GudangModelDetail->getJoinDataAll()->getResult('array');
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('Y-m-d');
+        $data = [
+            "title" => 'Sinergy | Gudang',
+            "barang" => $barang,
+            "results" => '',
+            "date" => $date
+        ];
+        return view('gudang/V_data_gudang', $data);
+    }
+
     public function permintaanBarang()
     {
-        $PermintaanBarang = $this->GudangModel->orderBy('created_at','DESC');
-        $PermintaanBarang = $this->GudangModel->findAll();
+        $PermintaanBarang = $this->GudangModel->getJoinData()->getResult(('array'));
         $data = [
             "title" => 'Sinergy | Permintaan Barang',
             "PermintaanBarang" => $PermintaanBarang
@@ -45,6 +60,7 @@ class BarangController extends BaseController
     public function tambah()
     {
         $data = [
+            'id_user' => $this->request->getPost('id_user'),
             'proyek' => $this->request->getPost('proyek'),
             'lokasi' => $this->request->getPost('lokasi'),
             'tanggal_pengajuan' => $this->request->getPost('tanggal_pengajuan'),
@@ -67,6 +83,7 @@ class BarangController extends BaseController
     public function update($id)
     {
         $data = [
+            'id_user' => $this->request->getPost('id_user'),
             'id' => $this->request->getPost('id'),
             'proyek' => $this->request->getPost('proyek'),
             'lokasi' => $this->request->getPost('lokasi'),
@@ -149,7 +166,6 @@ class BarangController extends BaseController
 
     public function hapusDetailBarang($id)
     {
-
         $this->GudangModelDetail->delete($id);
         return redirect()->to(base_url('gudang/BarangController/permintaanBarang'));
     }
@@ -245,6 +261,102 @@ class BarangController extends BaseController
     {
         $this->GudangModelNote->delete($id);
         return redirect()->back();
+    }
+
+    public function searchData()
+    {
+        $search = $this->request->getPost('date');
+        if ($search == "") {
+            return redirect()->back();
+        }
+
+        $query = $this->GudangModelDetail->getJoinDataDate($search)->getResult('array');
+        $data = [
+            'title' => 'Sinergy | Data Barang Rusak',
+            'results' => $query,
+            'barang' => '',
+            'date' => $search
+        ];
+        return view('gudang/V_data_gudang', $data);
+    }
+
+    public function excelHarianBarang()
+    {
+        $url = $_SERVER["REQUEST_URI"];
+        $url = substr($url, -10);
+        $barang = $this->GudangModelDetail->getJoinDataDate($url)->getResult('array');
+        $spreadsheet = new Spreadsheet();
+    // tulis header/nama kolom 
+    $spreadsheet->setActiveSheetIndex(0)
+                ->setCellValue('A1', 'Proyek')
+                ->setCellValue('B1', 'Nama Barang')
+                ->setCellValue('C1', 'Tipe')
+                ->setCellValue('D1', 'Satuan')
+                ->setCellValue('E1', 'Kuantitas')
+                ->setCellValue('F1', 'Jumlah Barang Rusak');
+    
+    $column = 2;
+    // tulis data mobil ke cell
+    foreach($barang as $data) {
+        $spreadsheet->setActiveSheetIndex(0)
+                    ->setCellValue('A' . $column, $data['proyek'])
+                    ->setCellValue('B' . $column, $data['nama_barang'])
+                    ->setCellValue('C' . $column, $data['tipe'])
+                    ->setCellValue('D' . $column, $data['satuan'])
+                    ->setCellValue('E' . $column, $data['kuantitas'])
+                    ->setCellValue('F' . $column, $data['jumlah_kerusakan']);
+        $column++;
+    }
+    // tulis dalam format .xlsx
+    $writer = new Xlsx($spreadsheet);
+    $fileName = 'Data Barang Harian ('. $url .')';
+
+    // Redirect hasil generate xlsx ke web client
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment;filename='.$fileName.'.xlsx');
+    header('Cache-Control: max-age=0');
+
+    $writer->save('php://output');
+    }
+
+    public function excelBulananBarang()
+    {
+        $url = $_SERVER["REQUEST_URI"];
+        $url = substr($url, -6);
+        $url = substr($url, 0, 4);
+        $barang = $this->GudangModelDetail->getJoinDataMonth($url)->getResult('array');
+        $spreadsheet = new Spreadsheet();
+    // tulis header/nama kolom 
+    $spreadsheet->setActiveSheetIndex(0)
+                ->setCellValue('A1', 'Proyek')
+                ->setCellValue('B1', 'Nama Barang')
+                ->setCellValue('C1', 'Tipe')
+                ->setCellValue('D1', 'Satuan')
+                ->setCellValue('E1', 'Kuantitas')
+                ->setCellValue('F1', 'Jumlah Barang Rusak');
+    
+    $column = 2;
+    // tulis data mobil ke cell
+    foreach($barang as $data) {
+        $spreadsheet->setActiveSheetIndex(0)
+                    ->setCellValue('A' . $column, $data['proyek'])
+                    ->setCellValue('B' . $column, $data['nama_barang'])
+                    ->setCellValue('C' . $column, $data['tipe'])
+                    ->setCellValue('D' . $column, $data['satuan'])
+                    ->setCellValue('E' . $column, $data['kuantitas'])
+                    ->setCellValue('F' . $column, $data['jumlah_kerusakan']);
+        $column++;
+    }
+    // tulis dalam format .xlsx
+    $writer = new Xlsx($spreadsheet);
+    $fileName = 'Data Barang Harian ('. $url .')';
+
+    // Redirect hasil generate xlsx ke web client
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment;filename='.$fileName.'.xlsx');
+    header('Cache-Control: max-age=0');
+
+    $writer->save('php://output');
     }
 }
 ?>

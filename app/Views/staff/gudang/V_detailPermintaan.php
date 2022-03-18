@@ -19,6 +19,7 @@
             <?php elseif ($permintaan[0]['verified_gudang'] == 1 && $permintaan[0]['verified_gm'] == 1 && $permintaan[0]['status_pengembalian'] == 0): ?>
             <?php elseif ($permintaan[0]['verified_gm'] == 1 && $permintaan[0]['status_pengembalian'] == 1): ?>
             <?php endif ?>
+
             <div class="table-responsive">
               <table class="table">
                 <thead>
@@ -39,6 +40,7 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <?php if ($barang != NULL) :?>
                   <?php foreach($barang as $brg): ?>
                   <tr>
                       <td><?= $brg['nama_barang']; ?></td>
@@ -57,8 +59,16 @@
                       </td>
                     </tr>
                     <?php endforeach; ?>
+                    <?php elseif ($barang == NULL) :?>
+                      <tr>
+                        <td colspan="5" class="text-center">Tidak ada data untuk ditampilkan</td>
+                      </tr>
+                    <?php endif ?>
                   </tbody>
               </table>
+              <?php if($permintaan[0]['note'] == NULL): ?>
+                <a type="button" class="btn btn-light my-2" href="<?= base_url('/staff/BarangController/permintaanBarang'); ?>">Kembali</a>
+              <?php endif; ?>
             </div>
 
             <!-- modal tambah -->
@@ -68,7 +78,7 @@
 
                   <!-- Modal Header -->
                   <div class="modal-header">
-                    <h4 class="modal-title">Tambah Permintaan Barang</h4>
+                    <h4 class="modal-title">Tambah Detail Permintaan Barang</h4>
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i
                         class="bi bi-x-lg"></i></button>
                   </div>

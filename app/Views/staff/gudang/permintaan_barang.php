@@ -14,7 +14,6 @@
             <a class="btn btn-primary btn-rounded" href="#" role="button" data-bs-toggle="modal"
               data-bs-target="#tambahOperasional">
               <i class="mdi mdi-plus mr-2"></i><span>Tambah</span></a>
-
             <div class="table-responsive">
               <table class="table">
                 <thead>
@@ -41,18 +40,6 @@
                         <a type="button" class="btn btn-rounded mx-1 btn-success"
                           href="<?= base_url('Staff/BarangController/detail')?>/<?= $Permintaan['id']; ?>">
                           <i class="bi bi-zoom-in"></i></a>
-                        <!-- Modal Note -->
-                        <?php if($Permintaan['status_pengembalian'] == 1 && $Permintaan['note'] != NULL): ?>
-                        <!-- <a type="button" class="btn btn-rounded mx-1 btn-primary disabled"
-                          href="<?= base_url('Staff/BarangController/note')?>/<?= $Permintaan['id']; ?>">
-                          <i class="bi bi-journal-text"></i></a> -->
-                        <?php elseif($Permintaan['status_pengembalian'] == 1 && $Permintaan['note'] == NULL): ?>
-                        <a type="button" class="btn btn-rounded mx-1 btn-primary"
-                          href="<?= base_url('Staff/BarangController/note')?>/<?= $Permintaan['id']; ?>">
-                          <i class="bi bi-journal-text"></i></a>
-                        <?php else: ?>
-                        <?php endif ?>
-
                         <!-- Modal Edit Permintaan -->
                         <?php if($Permintaan['verified_gudang'] == 1 && $Permintaan['verified_gm'] == 1 && $Permintaan['status_pengembalian'] == 1): ?>
                         <?php elseif($Permintaan['verified_gudang'] == 1 && $Permintaan['verified_gm'] == 1 && $Permintaan['status_pengembalian'] == 0): ?>
@@ -146,6 +133,7 @@
             <div class="modal-body">
               <form class="forms-sample" action="<?= base_url('Staff/BarangController/tambah/'); ?>" method="POST">
                 <?= csrf_field(); ?>
+                <input type="hidden" name="id_user" value="<?= $id_user; ?>">
                 <div class="form-group">
                   <label for="exampleInputUsername">Proyek</label>
                   <input name="proyek" type="text" class="form-control" id="exampleInputProyek" required

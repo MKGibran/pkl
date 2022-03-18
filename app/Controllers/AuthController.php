@@ -15,7 +15,7 @@ class AuthController extends BaseController
 
             $rules = [
                 'email' => 'required|min_length[6]|max_length[50]|valid_email',
-                'password' => 'required|min_length[8]|max_length[255]|validateStaff[email,password]',
+                'password' => 'required|min_length[6]|max_length[255]|validateStaff[email,password]',
             ];
 
             $errors = [
@@ -53,6 +53,10 @@ class AuthController extends BaseController
 
                     return redirect()->to(base_url('gudang'));
                 }
+                elseif($staff['role'] == "admin"){
+
+                    return redirect()->to(base_url('admin'));
+                }
             }
         }
 
@@ -66,6 +70,7 @@ class AuthController extends BaseController
             'name' => $staff['name'],
             'phone' => $staff['phone'],
             'email' => $staff['email'],
+            'photo' => $staff['photo'],
             'isLoggedIn' => true,
             "role" => $staff['role'],
         ];

@@ -14,6 +14,7 @@
             <h4 class="card-title">Ubah Form Permintaan Barang</h4>
             <form class="forms-sample" action="<?= base_url() ?>/Staff/BarangController/update/<?= $permintaan['id']; ?>" method="POST">
             <?= csrf_field(); ?>
+            <input type="hidden" name="id_user" value="<?= $id_user; ?>">
             <input type="hidden" name="id" required autocomplete="off" value="<?= $permintaan['id']; ?>">
               <div class="form-group">
                 <label for="exampleInputUsername">Proyek</label>

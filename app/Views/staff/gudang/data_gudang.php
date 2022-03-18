@@ -12,6 +12,15 @@
                     <div class="card">
                         <div class="card-body">
                             <!-- data -->
+                            <div class="row ${1| ,row-cols-2,row-cols-3, auto,justify-content-md-center,|} mb-2">
+                                <?php if (session()->get('role') == 'gudang' || session()->get('role') == 'manager' || session()->get('role') == 'finance' || session()->get('role') == 'admin') : ?>
+                                    <div class="col">
+                                        <div class="d-block float-right">
+                                            <a class="btn btn-outline-danger btn-sm float-end" href="<?= base_url('gudang/BarangController/barangRusak'); ?>" role="button">Data Barang Rusak</a>
+                                        </div>
+                                    </div>
+                                <?php endif ?>
+                            </div>
                             <div class="row ${1| ,row-cols-2,row-cols-3, auto,justify-content-md-center,|}">
                                 <?php foreach ($barang as $brg) : ?>
                                 <div class="col-lg-3">

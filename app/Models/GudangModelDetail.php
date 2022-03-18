@@ -41,6 +41,41 @@ class GudangModelDetail extends Model
         return $query;
     }
 
+    public function getJoinDataAll()
+    {
+        $query =  $this->db->table('permintaanbarang')
+         ->select('detailpermintaan.id, nama_barang, tipe, satuan, kuantitas, id_permintaan, proyek, jumlah_kerusakan, detailpermintaan.updated_at')
+         ->join('detailpermintaan', 'permintaanbarang.id = detailpermintaan.id_permintaan', 'left')
+         ->where('jumlah_kerusakan !=', NULL)
+         ->orderBy('detailpermintaan.updated_at','ASC')
+         ->get();
+        return $query;
+    }
+
+    public function getJoinDataDate($search)
+    {
+        $query =  $this->db->table('permintaanbarang')
+         ->select('detailpermintaan.id, nama_barang, tipe, satuan, kuantitas, id_permintaan, proyek, jumlah_kerusakan, detailpermintaan.updated_at')
+         ->join('detailpermintaan', 'permintaanbarang.id = detailpermintaan.id_permintaan', 'left')
+         ->where('jumlah_kerusakan !=', NULL)
+         ->where('detailpermintaan.updated_at', $search)
+         ->orderBy('detailpermintaan.updated_at','DESC')
+         ->get();
+        return $query;
+    }
+
+    public function getJoinDataMonth($search)
+    {
+        $query =  $this->db->table('permintaanbarang')
+         ->select('detailpermintaan.id, nama_barang, tipe, satuan, kuantitas, id_permintaan, proyek, jumlah_kerusakan, detailpermintaan.updated_at')
+         ->join('detailpermintaan', 'permintaanbarang.id = detailpermintaan.id_permintaan', 'left')
+         ->where('jumlah_kerusakan !=', NULL)
+         ->like('detailpermintaan.updated_at', $search, 'both')
+         ->orderBy('detailpermintaan.updated_at','DESC')
+         ->get();
+        return $query;
+    }
+
     public function updatePengembalian($data)
     {
         $this->db->table('detailpermintaan')->update($data);

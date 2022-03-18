@@ -12,7 +12,8 @@ class GudangModel extends Model
         'tanggal_pengajuan',
         'tanggal_pengembalian',
         'status_pengembalian',
-        'note'
+        'note',
+        'id_user'
     ];
     protected $useTimestamps      = true;
 
@@ -24,6 +25,38 @@ class GudangModel extends Model
     public function getPermintaan($id)
     {
         return $this->where(['id' => $id])->first();
+    }
+
+    public function getJoinData()
+    {
+        $query =  $this->db->table('users')
+         ->select('*')
+         ->join('permintaanbarang', 'permintaanbarang.id_user = users.id', 'right')
+         ->orderBy('updated_at','DESC')
+         ->get();
+        return $query;
+    }
+
+    public function getJoinDataManagerDashboard()
+    {
+        $query =  $this->db->table('users')
+         ->select('*')
+         ->join('permintaanbarang', 'permintaanbarang.id_user = users.id', 'right')
+         ->where('verified_gm', 0)
+         ->orderBy('updated_at','DESC')
+         ->get();
+        return $query;
+    }
+
+    public function getJoinDataStaffDashboard()
+    {
+        $query =  $this->db->table('users')
+         ->select('*')
+         ->join('permintaanbarang', 'permintaanbarang.id_user = users.id', 'right')
+         ->where('verified_gudang', 0)
+         ->orderBy('updated_at','DESC')
+         ->get();
+        return $query;
     }
 
     public function ubahData($data)

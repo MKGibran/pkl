@@ -9,14 +9,28 @@
             <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Form Pengajuan Operasional</h4>
-                <a class="btn btn-primary btn-rounded" href="#" role="button" data-bs-toggle="modal"
+                <!-- <a class="btn btn-primary btn-rounded" href="#" role="button" data-bs-toggle="modal"
                 data-bs-target="#tambahOperasional">
-                <i class="mdi mdi-plus mr-2"></i><span>Tambah</span></a>
+                <i class="mdi mdi-plus mr-2"></i><span>Tambah</span></a> -->
+
+                <div class="d-block float-right mt-0 mb-3">
+                    <a class="dropdown-toggle show-dropdown-arrow btn btn-inverse-primary btn-sm"
+                        id="nreportDropdown" href="#" data-toggle="dropdown"><i class="mdi mdi-file-excel mr-2"></i></i>
+                        Reports
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                        aria-labelledby="nreportDropdown">
+                        <a href="<?= base_url('finance/OperasionalController/exportExcel') ?>" class="dropdown-item">
+                            Excel
+                        </a>
+                    </div>
+                </div>
 
                 <div class="table-responsive">
                 <table class="table">
                     <thead>
                     <tr>
+                        <th>Nama Pengaju</th>
                         <th>Proyek</th>
                         <th>Lokasi</th>
                         <th>Tanggal</th>
@@ -28,8 +42,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($operasional as $row) : ?>
+                    <?php foreach ($getUser as $row) : ?>
                     <tr>
+                        <td><?= $row['name'] ?></td>
                         <td><?= $row['proyek'] ?></td>
                         <td><?= $row['lokasi'] ?></td>
                         <td><?= date('d-m-Y', strtotime($row['created_at'])) ?></td>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Manager;
+namespace App\Controllers\Finance;
 use App\Models\GudangModel;
 use App\Models\GudangModelAdmin;
 use App\Models\GudangModelDetail;
@@ -25,6 +25,6 @@ class BarangController extends BaseController
         $data = ["title" => 'Sinergy | Gudang',
         "barang" => $barang
         ];
-        return view('gudang/data_gudang', $data);
+        return view('staff/gudang/data_gudang', $data);
     }
 }

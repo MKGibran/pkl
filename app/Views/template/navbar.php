@@ -3,7 +3,7 @@
     <nav class="navbar top-navbar col-lg-12 col-12 p-0">
         <div class="container-fluid">
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-between">
-                <ul class="navbar-nav navbar-nav-left">
+                <!-- <ul class="navbar-nav navbar-nav-left">
                     <li class="nav-item ml-0 mr-5 d-lg-flex d-none">
                         <a href="#" class="nav-link horizontal-nav-left-menu">
                             <i class="mdi mdi-format-list-bulleted"></i></a>
@@ -122,7 +122,7 @@
                                 aria-describedby="search">
                         </div>
                     </li>
-                </ul>
+                </ul> -->
                 <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
                     <a class="navbar-brand brand-logo" href="index.html"><img
                             src="https://sinergydep.co.id/images/sdp-logo.png" style="width: 150px; height: 70px;" alt="logo" /></a>
@@ -130,29 +130,15 @@
                             src="https://sinergydep.co.id/images/sdp-logo-white.png" alt="logo" /></a>
                 </div>
                 <ul class="navbar-nav navbar-nav-right">
-                    <li class="nav-item dropdown d-lg-flex d-none">
-                        <a class="dropdown-toggle show-dropdown-arrow btn btn-inverse-primary btn-sm"
-                            id="nreportDropdown" href="#" data-toggle="dropdown"><i class="mdi mdi-file-document-box mr-2"></i>
-                            Reports
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
-                            aria-labelledby="nreportDropdown">
-                            <p class="mb-0 font-weight-medium float-left dropdown-header">Reports</p>
-                            <a class="dropdown-item">
-                                <i class="mdi mdi-file-pdf text-primary"></i>
-                                Pdf
-                            </a>
-                            <a class="dropdown-item">
-                                <i class="mdi mdi-file-excel text-primary"></i>
-                                Exel
-                            </a>
-                        </div>
-                    </li>
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
                             <span class="nav-profile-name"><?= session()->get('name') ?></span>
                             <span class="online-status"></span>
-                            <img src="<?= base_url() ?>/assets/images/faces/face28.png" alt="profile" />
+                            <?php if (!session()->get('photo')): ?>
+                                <img src="<?= base_url() ?>/assets/images/faces/blank.png" alt="profile" />
+                            <?php else :?>
+                                <img src="<?= base_url('img') ?>/<?= session()->get('photo')?>" alt="profile" />
+                            <?php endif ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
                             aria-labelledby="profileDropdown">
@@ -177,14 +163,44 @@
 
     <!-- navbar bawah -->
     <nav class="bottom-navbar">
-        <div class="container">
+        <div class="container px-5">
             <ul class="nav page-navigation">
                 <li class="nav-item">
+                <?php if (session()->get('role') == 'staff') : ?>
                     <a class="nav-link" href="<?= base_url() ?>/staff">
                         <i class="mdi mdi-file-document-box menu-icon"></i>
                         <span class="menu-title">Dashboard</span>
                     </a>
+                <?php elseif (session()->get('role') == 'admin') : ?>
+                    <a class="nav-link" href="<?= base_url('Admin/AdminController/') ?>">
+                        <i class="mdi mdi-file-document-box menu-icon"></i>
+                        <span class="menu-title">Dashboard</span>
+                    </a>
+                <?php elseif (session()->get('role') == 'gudang') : ?>
+                    <a class="nav-link" href="<?= base_url('Gudang/GudangController/') ?>">
+                        <i class="mdi mdi-file-document-box menu-icon"></i>
+                        <span class="menu-title">Dashboard</span>
+                    </a>
+                <?php elseif (session()->get('role') == 'finance') : ?>
+                    <a class="nav-link" href="<?= base_url('Finance/FinanceController/') ?>">
+                        <i class="mdi mdi-file-document-box menu-icon"></i>
+                        <span class="menu-title">Dashboard</span>
+                    </a>
+                <?php elseif (session()->get('role') == 'manager') : ?>
+                    <a class="nav-link" href="<?= base_url('Manager/ManagerController/') ?>">
+                        <i class="mdi mdi-file-document-box menu-icon"></i>
+                        <span class="menu-title">Dashboard</span>
+                    </a>
                 </li>
+                <?php endif ?>
+                <?php if (session()->get('role') == 'admin') : ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url() ?>/admin/AdminController/pengguna">
+                        <i class="bi bi-people-fill menu-icon"></i>
+                        <span class="menu-title">Pengguna</span>
+                    </a>
+                </li>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="mdi mdi-worker menu-icon"></i>
@@ -199,6 +215,7 @@
                                 <li class="nav-item"><a class="nav-link" href="<?= site_url() ?>staff/OperasionalController">Pengajuan Dana Operasional</a></li>
                             <?php elseif (session()->get('role') == 'manager') : ?>
                                 <li class="nav-item"><a class="nav-link" href="<?= site_url('manager/OperasionalController') ?>">Verifikasi Pengajuan Operasional</a></li>
+                                <li class="nav-item"><a class="nav-link" href="<?= site_url('manager/OperasionalController/showReportOperasional') ?>">Report Pengajuan Operasional</a></li>
                             <?php elseif (session()->get('role') == 'finance') : ?>
                                 <li class="nav-item"><a class="nav-link" href="<?= site_url('finance/OperasionalController') ?>">Verifikasi Pengajuan Operasional</a></li>
                             <?php endif ?>
@@ -226,6 +243,9 @@
                             <?php elseif (session()->get('role') == 'finance') : ?>
                             <li class="nav-item"><a class="nav-link" href="<?= site_url('finance/BarangController'); ?>">
                                     Inventaris</a></li>
+                            <?php elseif (session()->get('role') == 'admin') : ?>
+                            <li class="nav-item"><a class="nav-link" href="<?= site_url('admin/AdminController/gudang'); ?>">
+                                    Inventaris</a></li>
                             <?php elseif (session()->get('role') == 'gudang') : ?>
                             <li class="nav-item"><a class="nav-link" href="<?= site_url('gudang/BarangController/permintaanBarang'); ?>">Verifikasi<br>
                                     Permintaan Barang</a></li>
@@ -236,51 +256,6 @@
                             <?php endif ?>
                         </ul>
                     </div>
-                </li>
-                <li class="nav-item">
-                    <a href="pages/charts/chartjs.html" class="nav-link">
-                        <i class="mdi mdi-finance menu-icon"></i>
-                        <span class="menu-title">Charts</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="pages/tables/basic-table.html" class="nav-link">
-                        <i class="mdi mdi-grid menu-icon"></i>
-                        <span class="menu-title">Tables</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="pages/icons/mdi.html" class="nav-link">
-                        <i class="mdi mdi-emoticon menu-icon"></i>
-                        <span class="menu-title">Icons</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="mdi mdi-codepen menu-icon"></i>
-                        <span class="menu-title">Sample Pages</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="submenu">
-                        <ul class="submenu-item">
-                            <li class="nav-item"><a class="nav-link" href="">Login</a></li>
-                            <li class="nav-item"><a class="nav-link" href="">Login 2</a></li>
-                            <li class="nav-item"><a class="nav-link" href="">Register</a>
-                            </li>
-                            <li class="nav-item"><a class="nav-link" href="pages/samples/register-2.html">Register 2</a>
-                            </li>
-                            <li class="nav-item"><a class="nav-link"
-                                    href="pages/samples/lock-screen.html">Lockscreen</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a href="docs/documentation.html" class="nav-link">
-                        <i class="mdi mdi-file-document-box-outline menu-icon"></i>
-                        <span class="menu-title">Documentation</span></a>
                 </li>
             </ul>
         </div>
