@@ -10,8 +10,13 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">Profile</h4>
-          <img src="<?= base_url() ?>/assets/images/faces/face4.jpg" style="width: 300px;"
-            class="rounded-pill mx-auto d-block img-fluid mb-5" alt="Profile Photo">
+            <?php if (!$user[0]['photo']): ?>
+              <img src="<?= base_url() ?>/assets/images/faces/blank.png" style="width: 300px;"
+              class="rounded-pill mx-auto d-block img-fluid mb-5" alt="Profile Photo">
+            <?php else :?>
+              <img src="<?= base_url('img') ?>/<?= $user[0]['photo']; ?>" style="width: 300px; height:300px"
+              class="rounded-pill mx-auto d-block img-fluid mb-5" alt="Profile Photo">
+            <?php endif ?>
           <div class="table-responsive mt-5">
             <table class="table">
               <tbody>
@@ -58,7 +63,7 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        <form class="forms-sample" action="<?= base_url('Profile/editData') ?>" method="POST">
+        <form class="forms-sample" action="<?= base_url('Profile/editData') ?>" method="POST" enctype="multipart/form-data">
           <input type="hidden" name="id" value="<?= $user[0]['id']; ?>">
           <div class="form-group">
             <label for="exampleInputNama">Nama</label>
@@ -75,7 +80,7 @@
           </div>
           <div class="form-group">
             <label for="exampleInputPassword">Password</label>
-            <input name="password" type="password" class="form-control" value="<?= $user[0]['password']; ?>" id="exampleInputPassword">
+            <input name="password" type="password" class="form-control" id="exampleInputPassword">
           </div>
           <div class="form-group">
             <label for="exampleInputProfilePhoto">Foto Profil</label>

@@ -42,7 +42,7 @@ class GudangModel extends Model
         $query =  $this->db->table('users')
          ->select('*')
          ->join('permintaanbarang', 'permintaanbarang.id_user = users.id', 'right')
-         ->where('verified_gudang', 1)
+         ->where('verified_gm', 0)
          ->orderBy('updated_at','DESC')
          ->get();
         return $query;

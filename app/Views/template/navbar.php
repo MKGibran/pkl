@@ -134,7 +134,11 @@
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
                             <span class="nav-profile-name"><?= session()->get('name') ?></span>
                             <span class="online-status"></span>
-                            <img src="<?= base_url() ?>/assets/images/faces/face28.png" alt="profile" />
+                            <?php if (!session()->get('photo')): ?>
+                                <img src="<?= base_url() ?>/assets/images/faces/blank.png" alt="profile" />
+                            <?php else :?>
+                                <img src="<?= base_url('img') ?>/<?= session()->get('photo')?>" alt="profile" />
+                            <?php endif ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
                             aria-labelledby="profileDropdown">

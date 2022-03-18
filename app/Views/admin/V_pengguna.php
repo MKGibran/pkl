@@ -90,7 +90,7 @@
                         <option class="dropdown-item text-left" disabled selected value="">Pilih...</option>
                         <option class="dropdown-item text-left" value="manager">General Manager</option>
                         <option class="dropdown-item text-left" value="finance">Finance Manager</option>
-                        <option class="dropdown-item text-left" value="gudang">Staf Gudang</option>
+                        <option class="dropdown-item text-left" value="gudang">Staff Gudang</option>
                         <option class="dropdown-item text-left" value="admin">Admin</option>
                         <option class="dropdown-item text-left" value="staff">Staff</option>
                       </div>

@@ -22,8 +22,13 @@
           </div>
           <div class="card mt-3">
             <div class="card-body">
-              <img src="<?= base_url() ?>/assets/images/faces/face4.jpg" style="width: 250px;"
+            <?php if (!session()->get('photo')): ?>
+              <img src="<?= base_url() ?>/assets/images/faces/blank.png" style="width: 250px;"
                 class="rounded-pill mx-auto d-block img-fluid mb-5" alt="Profile Photo">
+            <?php else :?>
+              <img src="<?= base_url('img') ?>/<?= session()->get('photo')?>" style="width: 300px; height:300px"
+              class="rounded-pill mx-auto d-block img-fluid mb-5" alt="Profile Photo">
+            <?php endif ?>
               <div class="table-responsive mt-5">
                 <table class="table">
                   <tbody>
